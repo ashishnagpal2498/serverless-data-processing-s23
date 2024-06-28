@@ -4,14 +4,12 @@ const Home = () => {
     const [error, setError] = useState(null);
 
     useEffect(()=> {
-        async function fetchToken(){
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-    
-        if (code) {
-          const clientId = '725u7ia0f8eq2al4lhccq8l48r';
+        async function fetchToken(){
+          const clientId = '1av1ucnjabrp4eg42a7e68mna1';
           const redirectUri = 'http://localhost:3000/';
-          const domain = 'dal-vacation-home-sdp-23';
+          const domain = 'dalhome-ashish-2';
     
           const tokenEndpoint = `https://${domain}.auth.us-east-1.amazoncognito.com/oauth2/token`;
     
@@ -40,9 +38,10 @@ const Home = () => {
             console.error('Error exchanging code for tokens', error);
             setError('Failed to log in. Please try again.');
           };
-        }
+
     }
-    fetchToken();
+    if(code) 
+        fetchToken();
     },[])
 
   return (
