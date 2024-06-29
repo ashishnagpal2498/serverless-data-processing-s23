@@ -37,12 +37,12 @@ def get_property_agent(property_id):
 def persist_msg(message_data):
     try:
         db = firestore.Client(database = 'dbmessaging')
-        selected_agent = get_property_agent(message_data['propertyId'])
+        selected_agent = get_property_agent(message_data['propertyId'])['user_id']
         db.collection('customerConcerns').add({
             'booking_reference': message_data['booking_reference'],
             'concern': message_data['concern'],
             'propertyId': message_data['propertyId'],
-            'agent': selected_agent,
+            'property_agentId': selected_agent,
             'status': 'forwarded'
         })
     except Exception as e:
@@ -56,4 +56,4 @@ def forward_to_agent(cloud_event):
     message_data = json.loads(pub_sub_msg)
     persist_msg(message_data)
 
-#get_property_agent(1)
+#print(get_property_agent(1)['user_id'])
