@@ -1,0 +1,3 @@
+google-cloud-firestore
+boto3
+functions-framework
