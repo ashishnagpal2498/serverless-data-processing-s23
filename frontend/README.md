@@ -11,3 +11,5 @@
 5. The access token is stored in the local-storage
 
 
+Creating Layer Properly
+https://repost.aws/knowledge-center/lambda-import-module-error-python

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import SecurityQuestions from './components/SecurityQuestions';
+import CipherComponent from './components/CipherComponent';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/" exact element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/security-questions" element={<SecurityQuestions />} />
+          <Route path="/cipher-challenge" element={<CipherComponent />} />
         </Routes>
       </div>
     </Router>
