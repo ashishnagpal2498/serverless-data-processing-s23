@@ -45,7 +45,7 @@ const Signup = () => {
         return;
       }
 
-      const cognitoUser = result.user;
+      // const cognitoUser = result.user;
 
       const hashedAnswers = [
         CryptoJS.SHA256(securityAnswer1).toString(),

@@ -13,6 +13,7 @@ const SecurityQuestions = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Token Exchange --> Authorization Grant
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         async function fetchToken() {
@@ -21,11 +22,9 @@ const SecurityQuestions = () => {
             const domain = 'dalhome-ashish-2';
 
             const tokenEndpoint = `https://${domain}.auth.us-east-1.amazoncognito.com/oauth2/token`;
-
             const headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             };
-
             const data = new URLSearchParams({
                 grant_type: 'authorization_code',
                 client_id: clientId,
@@ -35,18 +34,16 @@ const SecurityQuestions = () => {
             try {
 
                 const response = await axios.post(tokenEndpoint, data, { headers })
-
-                const { access_token, id_token, refresh_token } = response.data;
+                const { access_token } = response.data;
                 localStorage.setItem('accessToken', access_token);
-                localStorage.setItem('idToken', id_token);
-                localStorage.setItem('refreshToken', refresh_token);
+                localStorage.setItem('isAuthCompleted', false)
                 console.log(access_token)
                 fetchQuestions();
             }
             catch (error) {
-                console.error('Error exchanging code for tokens', error);
+                console.error('Error exchanging code for tokens', error)
+                toast.error("Unexpected error encountered - try login again");
             };
-
         }
         if (code)
             fetchToken();
@@ -54,14 +51,8 @@ const SecurityQuestions = () => {
 
     const fetchQuestions = async () => {
         const accessToken = localStorage.getItem('accessToken');
-        console.log("userToken ---> ", accessToken)
         try {
-            const response = await axios.get('https://qktdhiu7svvlyg5axzvxy375pe0hsiwy.lambda-url.us-east-1.on.aws/', {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-
+            const response = await axios.get('https://qktdhiu7svvlyg5axzvxy375pe0hsiwy.lambda-url.us-east-1.on.aws/', { headers: {Authorization: `Bearer ${accessToken}`}});
             setQuestions(response.data.securityQuestions);
         } catch (error) {
             console.error('Error fetching security questions', error);
@@ -82,27 +73,20 @@ const SecurityQuestions = () => {
         e.preventDefault();
 
         const accessToken = localStorage.getItem('accessToken');
+        console.log("AccessToke-----> ",accessToken)
         const userAnswers = questions.map((question, index) => ({
             question: question.question,
             answer: CryptoJS.SHA256(answers[index]).toString()
         }));
 
         try {
-            const response = await axios.post('https://mhblpkavnwk33ac4op6lj3zklq0fvszi.lambda-url.us-east-1.on.aws/', {
-                answers: userAnswers
-            }, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
-            console.log(response)
+            const response = await axios.post('https://mhblpkavnwk33ac4op6lj3zklq0fvszi.lambda-url.us-east-1.on.aws/', {answers: userAnswers}, {headers: {Authorization: `Bearer ${accessToken}`}});
+            console.log(response);
             if (response.status === 200) {
                 toast.success('Security questions answered correctly!');
                 setTimeout(() => {
                     navigate('/cipher-challenge');
                 }, 4000)
-            } else {
-
             }
         } catch (error) {
             console.error('Error verifying security answers', error);
