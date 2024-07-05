@@ -15,7 +15,6 @@ const firestore = firebase.firestore();
 const database = firebase.database();
 firestore.settings({ experimentalForceLongPolling: true, merge: true });
 
-// Example: Replace with actual current user email and chat partner email
 let currentUserEmail = getUrlParameter('currentUserId');
 let receiverEmail = getUrlParameter('senderId');
     document.getElementById('chatWith').textContent = receiverEmail;
