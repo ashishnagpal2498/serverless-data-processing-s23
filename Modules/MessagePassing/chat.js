@@ -16,21 +16,28 @@ const database = firebase.database();
 firestore.settings({ experimentalForceLongPolling: true, merge: true });
 
 // Example: Replace with actual current user email and chat partner email
-let currentUserEmail = "user1@outlook.com";
-let chatWithEmail = "user2@outlook.com";
+let currentUserEmail = getUrlParameter('currentUserId');
+let receiverEmail = getUrlParameter('senderId');
+    document.getElementById('chatWith').textContent = receiverEmail;
 
-document.getElementById('chatWith').textContent = chatWithEmail;
+    const chatPath = generateChatPath(currentUserEmail, receiverEmail);
+    const messagesRef = database.ref('messages/' + chatPath);
 
-const chatPath = generateChatPath(currentUserEmail, chatWithEmail);
-const messagesRef = database.ref('messages/' + chatPath);
+    // Listen for new messages
+    messagesRef.on('child_added', (snapshot) => {
+        const message = snapshot.val();
+        const li = document.createElement('li');
+        li.textContent = message.sender + ": " + message.text;
+        document.getElementById('messages').appendChild(li);
+    });
 
-// Listen for new messages
-messagesRef.on('child_added', (snapshot) => {
-    const message = snapshot.val();
-    const li = document.createElement('li');
-    li.textContent = message.sender + ": " + message.text;
-    document.getElementById('messages').appendChild(li);
-});
+
+function getUrlParameter(name) {
+    name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
 
 // Send the message
 function sendMessage() {
@@ -43,7 +50,7 @@ function sendMessage() {
             timestamp: firebase.database.ServerValue.TIMESTAMP
         };
         messagesRef.push(message);
-        saveMessageToFirestore(chatWithEmail, currentUserEmail, text);
+        saveMessageToFirestore(receiverEmail, currentUserEmail, text);
         input.value = '';
     }
 }

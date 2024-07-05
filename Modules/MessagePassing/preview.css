@@ -1,0 +1,44 @@
+/* Reset default margin and padding */
+body, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* Center the button horizontally */
+button {
+    display: block;
+    margin: 20px auto; /* Adjust as needed */
+    padding: 10px 20px;
+    background-color: #007bff; /* Example color for original messages button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the messages preview container */
+#messagesPreview {
+    margin-top: 20px; /* Space between button and messages */
+}
+
+/* Style for each message button */
+.messageButton {
+    display: block;
+    width: 100%; /* Ensure each button takes full width */
+    padding: 10px;
+    margin-top: 10px; /* Space between message buttons */
+    background-color: #f0f0f0; /* Light grey background color for fetched messages */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left; /* Align text to the left */
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Show ellipsis for overflow text */
+    color: #666; /* Grey text color */
+}
+
+/* Hover styles */
+.messageButton:hover {
+    background-color: #e0e0e0; /* Example hover color */
+}
