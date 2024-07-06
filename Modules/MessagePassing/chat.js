@@ -20,15 +20,21 @@ let receiverEmail = getUrlParameter('senderId');
     document.getElementById('chatWith').textContent = receiverEmail;
 
     const chatPath = generateChatPath(currentUserEmail, receiverEmail);
-    const messagesRef = database.ref('messages/' + chatPath);
+    const messagesRef = firestore.collection('chat-messages').doc(chatPath);
 
     // Listen for new messages
-    messagesRef.on('child_added', (snapshot) => {
-        const message = snapshot.val();
-        const li = document.createElement('li');
-        li.textContent = message.sender + ": " + message.text;
-        document.getElementById('messages').appendChild(li);
-    });
+    messagesRef.onSnapshot((doc) => {
+        if (doc.exists) {
+          const messages = doc.data().messages || [];
+          const messagesContainer = document.getElementById('messages');
+          messagesContainer.innerHTML = ''; 
+          messages.forEach((message) => {
+            const li = document.createElement('li');
+            li.textContent = message.sender_id + ": " + message.content;
+            messagesContainer.appendChild(li);
+          });
+        }
+      });
 
 
 function getUrlParameter(name) {
@@ -43,12 +49,6 @@ function sendMessage() {
     const input = document.getElementById('messageInput');
     const text = input.value.trim();
     if (text) {
-        const message = {
-            text,
-            sender: currentUserEmail,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-        };
-        messagesRef.push(message);
         saveMessageToFirestore(receiverEmail, currentUserEmail, text);
         input.value = '';
     }

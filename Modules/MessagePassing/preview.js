@@ -15,7 +15,7 @@ const database = firebase.database();
 firestore.settings({ experimentalForceLongPolling: true, merge: true });
 
 function showMessagesPreview() {
-    const currentUserEmail = "124@gmail.com"; // Replace with logged in user email
+    const currentUserEmail = "customer5@outlook.com"; // Replace with logged in user email
 
     firestore.collection('chat-messages')
     .get()
@@ -31,7 +31,7 @@ function showMessagesPreview() {
             const relevantMessages = messages.filter(message => {
                 return message.receiver_id === currentUserEmail;
             });
-            //console.log(messages, relevantMessages)
+            console.log(messages, relevantMessages)
             if (relevantMessages.length > 0) {
                 // Display only the last relevant message for simplicity
                 const lastMessage = relevantMessages[relevantMessages.length - 1].content;
