@@ -103,7 +103,7 @@ def forward_to_agent(cloud_event):
     persist_msg(message_data)
 
 print(persist_msg({'propertyId':1,
-                   'senderEmailId':'customer2@outlook.com',
+                   'senderEmailId':'customer4@outlook.com',
                    'content':'electricity issues',
                    'booking_reference':1232
                    }))

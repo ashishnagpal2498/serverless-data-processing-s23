@@ -31,7 +31,7 @@ function showMessagesPreview() {
             const relevantMessages = messages.filter(message => {
                 return message.receiver_id === currentUserEmail;
             });
-            console.log(messages, relevantMessages)
+            //console.log(messages, relevantMessages)
             if (relevantMessages.length > 0) {
                 // Display only the last relevant message for simplicity
                 const lastMessage = relevantMessages[relevantMessages.length - 1].content;
@@ -42,9 +42,8 @@ function showMessagesPreview() {
                 messageButton.classList.add('messageButton');
                 messageButton.onclick = () => goToChat(senderId, currentUserEmail);
                 messagesPreview.appendChild(messageButton);
-                
             }
-        });
+        }); 
     })
     .catch(error => {
         console.error("Error fetching messages:", error);
