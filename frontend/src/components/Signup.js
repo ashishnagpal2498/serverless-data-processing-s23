@@ -4,6 +4,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CryptoJS from 'crypto-js';
+import { cognitoAppClient, cognitoUserPool } from '../config';
+import { CONFIRM_USER, USER_SIGN_UP } from '../APIs';
+import { useNavigate } from 'react-router-dom';
 
 const securityQuestions = [
   "What was your childhood nickname?",
@@ -24,13 +27,14 @@ const Signup = () => {
   const [securityAnswer2, setSecurityAnswer2] = useState('');
   const [securityQuestion3, setSecurityQuestion3] = useState(securityQuestions[2]);
   const [securityAnswer3, setSecurityAnswer3] = useState('');
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     const poolData = {
-      UserPoolId: 'us-east-1_XBgQX78yQ',
-      ClientId: '1av1ucnjabrp4eg42a7e68mna1'
+      UserPoolId: cognitoUserPool,
+      ClientId: cognitoAppClient
     };
 
     const userPool = new CognitoUserPool(poolData);
@@ -65,10 +69,13 @@ const Signup = () => {
       };
 
       try {
-
-        await axios.post('https://fd3qubgkmwyfgwy5gniufc2wlq0gxcxw.lambda-url.us-east-1.on.aws/', { username:email });
-        await axios.post('https://wapckgn3fjjhoecpbjx7bcedpq0oouzl.lambda-url.us-east-1.on.aws/', userDetails);
+        console.log("here -->", email)
+        await axios.post(CONFIRM_USER, { username:email });
+        await axios.post(USER_SIGN_UP, userDetails);
         toast.success('User signed up successfully!');
+        setTimeout(()=>{
+          navigate('/')
+        },3000)
       } catch (error) {
         console.error('Error storing user details', error);
         toast.error('Failed to store user details. Please try again.');
