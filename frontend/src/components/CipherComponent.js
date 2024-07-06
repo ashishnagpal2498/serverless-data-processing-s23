@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { GENERATE_CIPHER, VALIDATE_CIPHER } from '../APIs';
 
 const CipherComponent = () => {
     const [cipher, setCipher] = useState('');
@@ -14,8 +15,9 @@ const CipherComponent = () => {
     useEffect(() => {
         const fetchCipherChallenge = async () => {
             const accessToken = localStorage.getItem('accessToken');
+            console.log(accessToken) 
             try {
-                const response = await axios.get('https://n5yo7phswm5fl6j2iud6djwslq0cgyyw.lambda-url.us-east-1.on.aws/', {headers: {Authorization: `Bearer ${accessToken}`,},});
+                const response = await axios.get(GENERATE_CIPHER, {headers: {Authorization: `Bearer ${accessToken}`,},});
                 setCipher(response.data);
             } catch (error) {
                 console.error('Error fetching cipher challenge', error);
@@ -29,9 +31,9 @@ const CipherComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const accessToken = localStorage.getItem('accessToken');
-
+        console.log("Abc")
         try {
-            const response = await axios.post('https://auspiss5b7fd6np5llrsfbgdvu0ppeml.lambda-url.us-east-1.on.aws/', { answer: userAnswer },{headers: {Authorization: `Bearer ${accessToken}`}});
+            const response = await axios.post(VALIDATE_CIPHER, { answer: userAnswer },{headers: {Authorization: `Bearer ${accessToken}`}});
             if (response.data.success) {
                 toast.success('Cipher challenge answered correctly!');
                 // Return username for setting 

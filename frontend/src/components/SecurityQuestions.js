@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
+import { cognitoAppClient, cognitoDomainName, cognitoRedirectUri } from '../config';
+import { GET_SECURITY_QUESTIONS, VALIDATE_SECURITY_QUESTIONS } from '../APIs';
 
 const SecurityQuestions = () => {
     const [questions, setQuestions] = useState([]);
@@ -17,19 +19,15 @@ const SecurityQuestions = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         async function fetchToken() {
-            const clientId = '1av1ucnjabrp4eg42a7e68mna1';
-            const redirectUri = 'http://localhost:3000/security-questions';
-            const domain = 'dalhome-ashish-2';
-
-            const tokenEndpoint = `https://${domain}.auth.us-east-1.amazoncognito.com/oauth2/token`;
+            const tokenEndpoint = `https://${cognitoDomainName}.auth.us-east-1.amazoncognito.com/oauth2/token`;
             const headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             };
             const data = new URLSearchParams({
                 grant_type: 'authorization_code',
-                client_id: clientId,
+                client_id: cognitoAppClient,
                 code: code,
-                redirect_uri: redirectUri,
+                redirect_uri: cognitoRedirectUri,
             })
             try {
 
@@ -41,7 +39,7 @@ const SecurityQuestions = () => {
                 fetchQuestions();
             }
             catch (error) {
-                console.error('Error exchanging code for tokens', error)
+                console.error('Error exchanging code for tokens ', error)
                 toast.error("Unexpected error encountered - try login again");
             };
         }
@@ -52,7 +50,7 @@ const SecurityQuestions = () => {
     const fetchQuestions = async () => {
         const accessToken = localStorage.getItem('accessToken');
         try {
-            const response = await axios.get('https://qktdhiu7svvlyg5axzvxy375pe0hsiwy.lambda-url.us-east-1.on.aws/', { headers: {Authorization: `Bearer ${accessToken}`}});
+            const response = await axios.get(GET_SECURITY_QUESTIONS, { headers: {Authorization: `Bearer ${accessToken}`}});
             setQuestions(response.data.securityQuestions);
         } catch (error) {
             console.error('Error fetching security questions', error);
@@ -73,14 +71,14 @@ const SecurityQuestions = () => {
         e.preventDefault();
 
         const accessToken = localStorage.getItem('accessToken');
-        console.log("AccessToke-----> ",accessToken)
+        console.log("AccessToken-----> ",accessToken)
         const userAnswers = questions.map((question, index) => ({
             question: question.question,
             answer: CryptoJS.SHA256(answers[index]).toString()
         }));
 
         try {
-            const response = await axios.post('https://mhblpkavnwk33ac4op6lj3zklq0fvszi.lambda-url.us-east-1.on.aws/', {answers: userAnswers}, {headers: {Authorization: `Bearer ${accessToken}`}});
+            const response = await axios.post(VALIDATE_SECURITY_QUESTIONS, {answers: userAnswers}, {headers: {Authorization: `Bearer ${accessToken}`}});
             console.log(response);
             if (response.status === 200) {
                 toast.success('Security questions answered correctly!');
