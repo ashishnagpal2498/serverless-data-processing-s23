@@ -10,11 +10,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 p-4">
+    <nav className="bg-yellow-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white text-lg font-bold">
             Home
+          </Link>
+          <Link to="/properties" className="text-white text-lg font-bold ml-3">
+            Properties
           </Link>
         </div>
         <div className="flex items-center space-x-4">
@@ -30,8 +33,6 @@ const Navbar = () => {
               <span className="text-white">Hello, {auth.user}</span>
 
               <a href="/preview.html" className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">Notifications</a>
-
-
               <button
                 onClick={logout}
                 className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"

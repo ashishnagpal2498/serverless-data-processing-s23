@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, TextField, Button, Container } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 function BookingForm() {
   const { propertyId, roomId } = useParams();
   const { auth } = useAuth();
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,12 +36,18 @@ function BookingForm() {
       if (!response.ok) throw new Error("Network response was not ok.");
       const result = await response.json();
       console.log("Success:", result);
-      alert("Booking submitted successfully!");
+      toast.success("Booking Submitted successfully. View email to know the booking status !")
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to submit booking.");
+      toast.success("Failed to submit booking !")
     }
   };
+
+  useEffect(()=>{
+    if(!auth.isAuthenticated){
+      navigate('/signup')
+    }
+  },[auth])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -77,9 +84,8 @@ function BookingForm() {
 
         <Box sx={{ position: "fixed", bottom: 20, right: 20, width: "auto" }}>
           <TextField
-            size="small" // Reduces the size of the TextField
+            size="medium" // Reduces the size of the TextField
             margin="dense" // Reduces the margin, making the component more compact
-            required
             id="userQuery"
             label="Your Query"
             name="userQuery"
@@ -92,12 +98,13 @@ function BookingForm() {
             size="small" // Reduces the size of the button
             variant="contained"
             color="primary"
-            sx={{ mt: 1, ml: 1 }} // Adds margin top for spacing between fields
+            sx={{ mt: 2, ml: 1 }} // Adds margin top for spacing between fields
           >
             Submit Query
           </Button>
         </Box>
       </form>
+      <ToastContainer />
     </Container>
   );
 }

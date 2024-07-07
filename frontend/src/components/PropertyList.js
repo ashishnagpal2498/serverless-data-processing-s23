@@ -53,7 +53,7 @@ function PropertyList() {
                 />
                 <CardContent>
                   <Typography variant="h5" component="div">
-                    Property ID: {property.property_id}
+                    {property.property_name}
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     Agent ID: {property.agent_id}
