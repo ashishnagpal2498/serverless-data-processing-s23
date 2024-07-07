@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GENERATE_CIPHER, VALIDATE_CIPHER } from '../APIs';
+import { CircularProgress } from '@mui/material';
 
 const CipherComponent = () => {
     const [cipher, setCipher] = useState('');
@@ -12,6 +13,8 @@ const CipherComponent = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const {login} = useAuth();
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchCipherChallenge = async () => {
             const accessToken = localStorage.getItem('accessToken');
@@ -19,6 +22,7 @@ const CipherComponent = () => {
             try {
                 const response = await axios.get(GENERATE_CIPHER, {headers: {Authorization: `Bearer ${accessToken}`,},});
                 setCipher(response.data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching cipher challenge', error);
                 setError('Failed to fetch cipher challenge. Please try again.');
@@ -47,10 +51,18 @@ const CipherComponent = () => {
             if (error.response.status === 400) {
                 toast.error('Incorrect answers for the cipher challenge.');
             }
-            console.error('Error verifying cipher challenge', error);
+            else{
+                console.error('Error verifying cipher challenge', error);
             setError('Failed to verify cipher challenge. Please try again.');
+            }
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) {
+        return <CircularProgress />;
+      }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
