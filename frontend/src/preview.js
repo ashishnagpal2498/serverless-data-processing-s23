@@ -34,16 +34,21 @@ export function showMessagesPreview() {
             const relevantMessages = messages.filter(message => {
                 return message.receiver_id === currentUserEmail;
             });
-            console.log(messages, relevantMessages)
+            //console.log(messages, relevantMessages)
+            console.log(other_recipient_Id,currentUserEmail);
             if (relevantMessages.length > 0) {
                 // Display only the last relevant message for simplicity
                 const lastMessage = relevantMessages[relevantMessages.length - 1].content;
-                const senderId = relevantMessages[relevantMessages.length - 1].sender_id;
+                const other_recipient_Id = relevantMessages[relevantMessages.length - 1].sender_id;
 
                 const messageButton = document.createElement('button');
-                messageButton.textContent = `${senderId}: ${lastMessage}`;
+                messageButton.textContent = `${other_recipient_Id}: ${lastMessage}`;
+
+                if(other_recipient_Id === currentUserEmail)
+                    other_recipient_Id = relevantMessages[relevantMessages.length - 1].receiver_id;
+                
                 messageButton.classList.add('messageButton');
-                messageButton.onclick = () => goToChat(senderId, currentUserEmail);
+                messageButton.onclick = () => goToChat(other_recipient_Id, currentUserEmail);
                 messagesPreview.appendChild(messageButton);
             }
         }); 
@@ -54,5 +59,5 @@ export function showMessagesPreview() {
 }
 
 function goToChat(senderId, currentUserId) {
-    window.location.href = `chat.html?senderId=${encodeURIComponent(senderId)}&currentUserId=${encodeURIComponent(currentUserId)}`;
+    window.location.href = `chat.html?other_recipientId=${encodeURIComponent(other_recipient_Id)}&currentUserId=${encodeURIComponent(currentUserId)}`;
 }
