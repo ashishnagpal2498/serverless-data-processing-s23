@@ -9,7 +9,7 @@ const Home = () => {
     <div>
       <div className="relative w-full h-screen bg-cover bg-center" style={{ backgroundImage: `url(${hotelBackground})` }}>
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50">
-          <h1 className="text-white text-6xl font-bold mb-2">Looking for Vacation ?</h1>
+          <h1 className="text-white text-6xl font-bold mb-2">Planning for a Vacation ?</h1>
           <h4 className="text-white text-2xl mb-4">We got the best properties to book from</h4>
           <Button 
             variant="contained" 
