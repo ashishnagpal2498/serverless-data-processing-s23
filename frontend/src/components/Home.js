@@ -3,8 +3,9 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome to the Home Vaction Application</h1>
+      <h1>Welcome to the Home Vacation Application</h1>
     </div>
+    
   );
 };
 

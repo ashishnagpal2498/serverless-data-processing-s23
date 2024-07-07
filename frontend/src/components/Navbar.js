@@ -2,9 +2,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
 const Navbar = () => {
   const { auth, logout } = useAuth();
+
+  const routeChange = () => {
+    window.location.href = '/preview.html'; // This assumes that preview.html is in the public directory
+  };
 
   return (
     <nav className="bg-blue-600 p-4">
@@ -25,10 +28,15 @@ const Navbar = () => {
           ) : (
             <>
               <span className="text-white">Hello, {auth.user}</span>
+
+              <a href="/preview.html" className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">Notifications</a>
+
+
               <button
                 onClick={logout}
                 className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
               >
+                
                 Logout
               </button>
             </>
