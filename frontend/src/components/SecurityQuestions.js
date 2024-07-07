@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import { cognitoAppClient, cognitoDomainName, cognitoRedirectUri } from '../config';
 import { GET_SECURITY_QUESTIONS, VALIDATE_SECURITY_QUESTIONS } from '../APIs';
+import { CircularProgress } from '@mui/material';
 
 const SecurityQuestions = () => {
     const [questions, setQuestions] = useState([]);
@@ -97,8 +98,8 @@ const SecurityQuestions = () => {
     };
 
     if (loading) {
-        return <h3>Loading . . . . .</h3>
-    }
+        return <CircularProgress />;
+      }
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
             <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
