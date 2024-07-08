@@ -16,8 +16,8 @@ const database = firebase.database();
 firestore.settings({ experimentalForceLongPolling: true, merge: true });
 
 function showMessagesPreview() {
-    currentUserEmail = localStorage['username'];
-    
+    currentUserEmail = localStorage['username']; 
+
     firestore.collection('chat-messages')
     .get()
     .then(querySnapshot => {
@@ -29,17 +29,22 @@ function showMessagesPreview() {
             const messages = data.messages || [];
             
             const relevantMessages = messages.filter(message => {
-                return message.receiver_id === currentUserEmail;
+                return message.receiver_id === currentUserEmail || message.sender_id === currentUserEmail;
             });
             console.log(messages, relevantMessages)
             if (relevantMessages.length > 0) {
                 const lastMessage = relevantMessages[relevantMessages.length - 1].content;
-                const senderId = relevantMessages[relevantMessages.length - 1].sender_id;
+                let otherRecipientId = relevantMessages[relevantMessages.length - 1].sender_id;
 
                 const messageButton = document.createElement('button');
-                messageButton.textContent = `${senderId}: ${lastMessage}`;
+                messageButton.textContent = `${otherRecipientId}: ${lastMessage}`;
+
+                if(otherRecipientId === currentUserEmail)
+                    otherRecipientId = relevantMessages[relevantMessages.length - 1].receiver_id;
+                                
+                console.log(otherRecipientId,currentUserEmail);
                 messageButton.classList.add('messageButton');
-                messageButton.onclick = () => goToChat(senderId, currentUserEmail);
+                messageButton.onclick = () => goToChat(otherRecipientId, currentUserEmail);
                 messagesPreview.appendChild(messageButton);
             }
         }); 
@@ -49,6 +54,6 @@ function showMessagesPreview() {
     });
 }
 
-function goToChat(senderId, currentUserId) {
-    window.location.href = `chat.html?senderId=${encodeURIComponent(senderId)}&currentUserId=${encodeURIComponent(currentUserId)}`;
+function goToChat(otherRecipientId, currentUserId) {
+    window.location.href = `chat.html?otherRecipientId=${encodeURIComponent(otherRecipientId)}&currentUserId=${encodeURIComponent(currentUserId)}`;
 }

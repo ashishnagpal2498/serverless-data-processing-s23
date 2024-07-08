@@ -16,7 +16,7 @@ const database = firebase.database();
 firestore.settings({ experimentalForceLongPolling: true, merge: true });
 
 let currentUserEmail = getUrlParameter('currentUserId');
-let receiverEmail = getUrlParameter('senderId');
+let receiverEmail = getUrlParameter('otherRecipientId');
     document.getElementById('chatWith').textContent = receiverEmail;
 
     const chatPath = generateChatPath(currentUserEmail, receiverEmail);

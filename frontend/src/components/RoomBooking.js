@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Box, TextField, Button, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
 
 function BookingForm() {
   const { propertyId, roomId } = useParams();
@@ -42,6 +44,37 @@ function BookingForm() {
       toast.success("Failed to submit booking !")
     }
   };
+
+  const sendMessage = async () => {
+    console.log(localStorage.getItem('accessToken'));
+    const messageData = {
+      propertyId: propertyId,
+      senderEmailId: auth.user,
+      content: document.getElementById('userQuery').value,
+      booking_reference: Math.floor(1000 + Math.random() * 9000)
+    };
+  
+    try {
+      console.log(messageData)
+      const response = await axios.post(
+        'https://us-central1-serverless-project-427212.cloudfunctions.net/publish_concern', 
+        messageData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'  // Replace with your actual frontend domain
+          }
+        });
+      console.log('Message sent successfully:', response.data);
+      toast.success('Complaint submitted successfully.');
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error("Complaint submission failed - try again later");
+    }
+
+    document.getElementById('userQuery').value = '';
+  };
+
 
   useEffect(()=>{
     if(!auth.isAuthenticated){
@@ -99,6 +132,8 @@ function BookingForm() {
             variant="contained"
             color="primary"
             sx={{ mt: 2, ml: 1 }} // Adds margin top for spacing between fields
+            onClick={sendMessage}
+            
           >
             Submit Query
           </Button>
