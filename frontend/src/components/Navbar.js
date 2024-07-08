@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { cognitoRedirectUri } from '../config';
 const Navbar = () => {
   const { auth, logout } = useAuth();
 
@@ -23,7 +24,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {!auth.isAuthenticated ? (
             <>
-              <Link className='text-white' to="https://dal-vacation-home-sdp23.auth.us-east-1.amazoncognito.com/login?client_id=hobfr7l22dpek04qvj53pvuhv&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsecurity-questions">Login</Link>
+              <Link className='text-white' to={`https://dal-vacation-home-sdp23.auth.us-east-1.amazoncognito.com/login?client_id=hobfr7l22dpek04qvj53pvuhv&response_type=code&scope=email+openid+phone&redirect_uri=${cognitoRedirectUri}`}>Login</Link>
               <Link to="/signup" className="text-white">
                 Signup
               </Link>
