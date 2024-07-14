@@ -23,14 +23,16 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (username, token) => {
+  const login = (username, token,user_role) => {
     localStorage.setItem('accessToken', token);
     localStorage.setItem('username', username);
     localStorage.setItem('isAuthCompleted', true)
+    localStorage.setItem('role', user_role)
     setAuth({
       isAuthenticated: true,
       user: username,
       token,
+      user_role
     });
   };
 
@@ -38,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('username');
     localStorage.removeItem('isAuthCompleted')
+    localStorage.removeItem('role')
     setAuth({
       isAuthenticated: false,
       user: null,

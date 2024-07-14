@@ -27,6 +27,7 @@ const Signup = () => {
   const [securityAnswer2, setSecurityAnswer2] = useState('');
   const [securityQuestion3, setSecurityQuestion3] = useState(securityQuestions[2]);
   const [securityAnswer3, setSecurityAnswer3] = useState('');
+  const [isPropertyAgent, setIsPropertyAgent] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -49,8 +50,6 @@ const Signup = () => {
         return;
       }
 
-      // const cognitoUser = result.user;
-
       const hashedAnswers = [
         CryptoJS.SHA256(securityAnswer1).toString(),
         CryptoJS.SHA256(securityAnswer2).toString(),
@@ -65,17 +64,17 @@ const Signup = () => {
           { question: securityQuestion1, answer: hashedAnswers[0] },
           { question: securityQuestion2, answer: hashedAnswers[1] },
           { question: securityQuestion3, answer: hashedAnswers[2] }
-        ]
+        ],
+        user_role: isPropertyAgent ? 'property_agent' : 'registered_user'
       };
 
       try {
-        console.log("here -->", email)
-        await axios.post(CONFIRM_USER, { username:email });
+        await axios.post(CONFIRM_USER, { username: email });
         await axios.post(USER_SIGN_UP, userDetails);
         toast.success('User signed up successfully!');
-        setTimeout(()=>{
+        setTimeout(() => {
           navigate('/')
-        },3000)
+        }, 3000);
       } catch (error) {
         console.error('Error storing user details', error);
         toast.error('Failed to store user details. Please try again.');
@@ -103,6 +102,15 @@ const Signup = () => {
           <div>
             <label className="block text-gray-700">Phone:</label>
             <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+          </div>
+          <div className="flex items-center">
+            <label className="block text-gray-700">Property Agent:</label>
+            <input
+              type="checkbox"
+              checked={isPropertyAgent}
+              onChange={() => setIsPropertyAgent(!isPropertyAgent)}
+              className="ml-2 h-6 w-6"
+            />
           </div>
           <div>
             <label className="block text-gray-700">Security Question 1:</label>
