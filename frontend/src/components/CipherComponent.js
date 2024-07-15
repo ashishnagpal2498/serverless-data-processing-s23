@@ -42,7 +42,7 @@ const CipherComponent = () => {
                 toast.success('Cipher challenge answered correctly!');
                 // Return username for setting 
                 console.log(response.data)
-                login(response.data.username,accessToken);
+                login(response.data.username,accessToken, response.data.user_role);
                 setTimeout(() => {
                     navigate('/');
                 }, 4000)
