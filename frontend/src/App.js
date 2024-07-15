@@ -1,5 +1,5 @@
 // src/App.js
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -11,6 +11,18 @@ import Properties from "./components/PropertyList";
 import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
+  const [agentId, setAgentId] = useState("");
+
+  useEffect(() => {
+    console.log(localStorage);
+    const isAuthCompleted = localStorage.getItem("isAuthCompleted"); // Example: Get username from local storage
+    if (!isAuthCompleted) {
+      setAgentId("0fb6986f-9eae-4894-a16b-09b8ce5272f3");
+    } else {
+      setAgentId("90e74eb0-ade5-4500-9023-1eb358391f96");    
+    }
+  }, []); 
+
   return (
     <AuthProvider>
       <Router>
@@ -27,6 +39,13 @@ const App = () => {
               element={<RoomBooking />}
             />
           </Routes>
+          <df-messenger
+            intent="WELCOME"
+            chat-title="DalAppBot"
+            //agent-id="0fb6986f-9eae-4894-a16b-09b8ce5272f3"
+            agent-id = {agentId}
+            language-code="english"
+          ></df-messenger>
         </div>
       </Router>
     </AuthProvider>
