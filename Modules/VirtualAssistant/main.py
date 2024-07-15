@@ -64,11 +64,6 @@ def chatbot_webhook(input_request):
     }
 
 
-
-
-
-
-
 #req = {'responseId': '784992c1-acfc-425c-bb55-4b751a388679-14a02368', 'queryResult': {'queryText': '1234', 'parameters': {'BookingReference': 'ce35e7b0-03b8-4a93-bd49-ddc5d34632c3'}, 'allRequiredParamsPresent': True, 'fulfillmentMessages': [{'text': {'text': ['']}}], 'outputContexts': [{'name': 'projects/lab-activity2-428216/agent/sessions/dfMessenger-57336883/contexts/__system_counters__', 'parameters': {'no-input': 0.0, 'no-match': 0.0, 'BookingReference': 'ce35e7b0-03b8-4a93-bd49-ddc5d34632c3', 'BookingReference.original': 'ce35e7b0-03b8-4a93-bd49-ddc5d34632c3'}}], 'intent': {'name': 'projects/lab-activity2-428216/agent/intents/9348f39e-b9db-4a28-a9bf-7f2ff586ea5e', 'displayName': 'SearchRoomDetails'}, 'intentDetectionConfidence': 0.3, 'languageCode': 'en'}, 'originalDetectIntentRequest': {'payload': {}}, 'session': 'projects/lab-activity2-428216/agent/sessions/dfMessenger-57336883'}
 #req = {'responseId': 'e8a6dfc5-c236-4fb1-906a-d95ed0b5440d-14a02368', 'queryResult': {'queryText': 'n@gmail.com', 'parameters': {'booking_reference': 'ce35e7b0-03b8-4a93-bd49-ddc5d34632c3', 'senderEmailId': 'ashish.nagpal@dal.ca', 'content':'electricty issues to be resolved...'}, 'allRequiredParamsPresent': True, 'fulfillmentMessages': [{'text': {'text': ['']}}], 'outputContexts': [{'name': 'projects/lab-activity2-428216/agent/sessions/dfMessenger-81862989/contexts/__system_counters__', 'parameters': {'no-input': 0.0, 'no-match': 0.0, 'booking_reference': '1232', 'booking_reference.original': '1232', 'senderEmailId': 'n@gmail.com', 'senderEmailId.original': 'ashish.nagpal@dal.ca'}}], 'intent': {'name': 'projects/lab-activity2-428216/agent/intents/10fa6a0e-d6d2-4234-9d3a-aa00497ebeea', 'displayName': 'CustomerConcerns'}, 'intentDetectionConfidence': 1.0, 'languageCode': 'en'}, 'originalDetectIntentRequest': {'payload': {}}, 'session': 'projects/lab-activity2-428216/agent/sessions/dfMessenger-81862989'}
 #print(webhook(req))

@@ -43,7 +43,6 @@ const App = () => {
           <df-messenger
             intent="WELCOME"
             chat-title="DalAppBot"
-            //agent-id="0fb6986f-9eae-4894-a16b-09b8ce5272f3"
             agent-id = {agentId}
             language-code="english"
           ></df-messenger>
