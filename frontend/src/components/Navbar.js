@@ -3,12 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { cognitoRedirectUri } from '../config';
+
 const Navbar = () => {
   const { auth, logout } = useAuth();
-
-  const routeChange = () => {
-    window.location.href = '/preview.html'; // This assumes that preview.html is in the public directory
-  };
 
   return (
     <nav className="bg-yellow-500 p-4">
@@ -19,6 +16,9 @@ const Navbar = () => {
           </Link>
           <Link to="/properties" className="text-white text-lg font-bold ml-3">
             Properties
+          </Link>
+          <Link to="/feedbacks" className="text-white text-lg font-bold ml-3">
+            Feedbacks
           </Link>
         </div>
         <div className="flex items-center space-x-4">
@@ -32,13 +32,11 @@ const Navbar = () => {
           ) : (
             <>
               <span className="text-white">Hello, {auth.user}</span>
-
               <a href="/preview.html" className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">Notifications</a>
               <button
                 onClick={logout}
                 className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
               >
-                
                 Logout
               </button>
             </>
