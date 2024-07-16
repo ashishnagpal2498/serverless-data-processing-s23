@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { cognitoRedirectUri } from '../config';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const Navbar = () => {
   const { auth, logout } = useAuth();
@@ -32,10 +33,11 @@ const Navbar = () => {
           ) : (
             <>
               <span className="text-white">Hello, {auth.user}</span>
-              <a href="/preview.html" className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">Notifications</a>
+              <a href="/preview.html" className="text-white"><NotificationsIcon fontSize='medium'/></a>
+
               <button
                 onClick={logout}
-                className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
+                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
               >
                 Logout
               </button>

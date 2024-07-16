@@ -14,12 +14,23 @@ import {
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import axios from "axios";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 
 const GetAllFeedbacks = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [properties, setProperties] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const calculateSentiment = (sentimentScore) => {
+    if(sentimentScore > 0.5){
+      return <SentimentSatisfiedAltIcon fontSize="medium" />
+    }
+    else if(sentimentScore<0.5 && sentimentScore > -0.2){
+      return <SentimentSatisfiedIcon fontSize="medium" />
+    }
+    return <SentimentVeryDissatisfiedIcon fontSize="medium" />
+  }
   useEffect(() => {
     const fetchProperties = async () => {
       try {
@@ -43,7 +54,7 @@ const GetAllFeedbacks = () => {
         const feedbackSnapshot = await getDocs(feedbackCollection);
         const feedbackList = feedbackSnapshot.docs.map((doc) => doc.data());
         setFeedbacks(feedbackList);
-        setLoading(false);
+        setTimeout(() => setLoading(false), 2000);
       } catch (error) {
         console.error("Error fetching feedbacks:", error);
       }
@@ -59,8 +70,8 @@ const GetAllFeedbacks = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Feedbacks
+      <Typography variant="h5" component="h2" gutterBottom>
+        Property Feedbacks
       </Typography>
       <TableContainer component={Paper}>
         <Table>
@@ -84,7 +95,11 @@ const GetAllFeedbacks = () => {
                 </TableCell>
                 <TableCell>{feedback.message}</TableCell>
                 <TableCell>{feedback.userId}</TableCell>
-                <TableCell>{feedback.sentiment || "N/A"}</TableCell>
+                <TableCell>
+                  {feedback.sentiment
+                    ? calculateSentiment(feedback.sentiment.score)
+                    : "N/A"}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
