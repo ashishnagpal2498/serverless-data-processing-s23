@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Container,
   Paper,
@@ -12,11 +12,14 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-function PropertyList() {
+const PropertyList = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { auth } = useAuth();
   const navigate = useNavigate();
+  const {role} = auth  
 
   useEffect(() => {
     fetch(
@@ -30,13 +33,15 @@ function PropertyList() {
       .catch((error) => console.error("Failed to fetch properties:", error));
   }, []);
 
+  
+
+  const handleViewFeedback = async (propertyId) => {
+    navigate(`/property-feedback/${propertyId}`);
+  };
+
   if (loading) {
     return <CircularProgress />;
   }
-
-  const handleBooking = (propertyId, roomId) => {
-    navigate(`/book-room/${propertyId}/${roomId}`);
-  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
@@ -75,13 +80,31 @@ function PropertyList() {
                         variant="contained"
                         color="primary"
                         onClick={() =>
-                          handleBooking(property.property_id, room.room_id)
+                          navigate(`/book-room/${property.property_id}/${room.room_id}`)
                         }
                       >
                         Book Now
                       </Button>
                     </Box>
                   ))}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleViewFeedback(property.property_id)}
+                    sx={{ mt: 2 }}
+                  >
+                    View Feedback
+                  </Button>
+                  {role === "registered_user" && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => navigate(`/feedback/${property.property_id}`)}
+                      sx={{ mt: 2, ml:2 }}
+                    >
+                      Give Feedback
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             </Paper>

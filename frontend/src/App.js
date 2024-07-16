@@ -8,7 +8,11 @@ import SecurityQuestions from "./components/SecurityQuestions";
 import CipherComponent from "./components/CipherComponent";
 import RoomBooking from "./components/RoomBooking";
 import Properties from "./components/PropertyList";
+import PropertyFeedback from "./components/Feedback/GetFeedbackById";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import Feedback from "./components/Feedback/AddFeedback";
+import GetAllFeedbacks from "./components/Feedback/GetAllFeedbacks";
 
 const App = () => {
   return (
@@ -25,6 +29,20 @@ const App = () => {
             <Route
               path="/book-room/:propertyId/:roomId"
               element={<RoomBooking />}
+            />
+            <Route
+              path="/feedbacks"
+              element={<GetAllFeedbacks />}
+            />
+            <Route
+              path="/feedback/:propertyId"
+              element={
+                <ProtectedRoute element={<Feedback />} />
+              }
+            />
+            <Route
+              path="/property-feedback/:propertyId"
+              element={<PropertyFeedback />}
             />
           </Routes>
         </div>
