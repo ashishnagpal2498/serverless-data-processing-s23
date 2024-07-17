@@ -14,25 +14,27 @@ export const AuthProvider = ({ children }) => {
     const storedToken = localStorage.getItem('accessToken');
     const storedUser = localStorage.getItem('username');
     const isAuthCompleted = localStorage.getItem('isAuthCompleted')
+    const role = localStorage.getItem('role');
     if (storedToken && storedUser && isAuthCompleted) {
       setAuth({
         isAuthenticated: true,
         user: storedUser,
         token: storedToken,
+        role
       });
     }
   }, []);
 
-  const login = (username, token,user_role) => {
+  const login = (username, token,role) => {
     localStorage.setItem('accessToken', token);
     localStorage.setItem('username', username);
     localStorage.setItem('isAuthCompleted', true)
-    localStorage.setItem('role', user_role)
+    localStorage.setItem('role', role)
     setAuth({
       isAuthenticated: true,
       user: username,
       token,
-      user_role
+      role
     });
   };
 
@@ -45,6 +47,7 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated: false,
       user: null,
       token: null,
+      role: null
     });
   };
 
