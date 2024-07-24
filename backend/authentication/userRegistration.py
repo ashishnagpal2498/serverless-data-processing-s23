@@ -1,12 +1,13 @@
 import json
 import boto3
+import os
 
 sns = boto3.client('sns')
 dynamo = boto3.resource('dynamodb')
-table = dynamo.Table('Users')
+table_name = os.environ.get('DYANAMODB_TABLE_NAME')
+table = dynamo.Table(table_name)
 
-sns_topic_arn = 'arn:aws:sns:us-east-1:440595714051:DALVacationHomeNotifications'
-dlq_arn = "arn:aws:sqs:us-east-1:440595714051:FailedSubscriptionDLQ"
+sns_topic_arn = os.environ.get('SNS_TOPIC_ARN')
 
 def lambda_handler(event, context):
     body = json.loads(event['body'])
@@ -14,13 +15,16 @@ def lambda_handler(event, context):
     address = body['address']
     phone = body['phone']
     security_questions = body['securityQuestions']
+    user_role = body['user_role'] # Adding User Role
+    
     try:
         table.put_item(
             Item={
                 'username': username,
                 'address': address,
                 'phone': phone,
-                'securityQuestions': security_questions
+                'securityQuestions': security_questions,
+                'user_role': user_role
             }
         )
         print("Username is ---> ", username)
@@ -31,9 +35,6 @@ def lambda_handler(event, context):
             Attributes={
                 'FilterPolicy': json.dumps({
                     'target': [username]
-                }),
-                'RedrivePolicy': json.dumps({
-                    'deadLetterTargetArn': dlq_arn
                 })
             }
         )

@@ -3,10 +3,11 @@ import requests
 import jwt
 from jwt.algorithms import RSAAlgorithm
 from jwt.exceptions import InvalidTokenError
+import os
 
-cognito_region = 'us-east-1'
-userpool_id = 'us-east-1_Zjn8biPdx'
-app_client_id = 'hobfr7l22dpek04qvj53pvuhv'
+cognito_region = os.environ.get('AWS_REGION')
+userpool_id =  os.environ.get('COGNITO_USERPOOL_ID')
+app_client_id = os.environ.get('COGNITO_APP_CLIENT_ID')
 
 def get_public_key(kid, keys):
     for key in keys:

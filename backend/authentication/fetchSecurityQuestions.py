@@ -1,8 +1,10 @@
 import json
 import boto3
+import os
 
 dynamo = boto3.resource('dynamodb')
-table = dynamo.Table('Users')
+table_name = os.environ.get('DYANAMODB_TABLE_NAME')
+table = dynamo.Table(table_name)
 
 def get_username_from_token(token):
     lambda_client = boto3.client('lambda')

@@ -2,12 +2,14 @@ import json
 import random
 import string
 import boto3
+import os
 
 dynamo = boto3.resource('dynamodb')
-table = dynamo.Table('Users')
+table_name = os.environ.get('DYANAMODB_TABLE_NAME')
+table = dynamo.Table(table_name)
 sns = boto3.client('sns')
 
-sns_topic_arn = 'arn:aws:sns:us-east-1:440595714051:DALVacationHomeNotifications'
+sns_topic_arn = os.environ.get('SNS_TOPIC_ARN')
 
 def get_username_from_token(token):
     lambda_client = boto3.client('lambda')
@@ -46,6 +48,8 @@ def lambda_handler(event, context):
 
         user_details = response['Item']
         cipher_answer = user_details.get('cipherAnswer', '')
+        user_role = user_details.get('user_role')
+        print("user_role", user_role)
 
         if user_answer == cipher_answer:
             sns.publish(
@@ -60,7 +64,7 @@ def lambda_handler(event, context):
             )
             return {
                 'statusCode': 200,
-                'body': json.dumps({'success': True, 'message': 'Cipher challenge answered correctly!', 'username': username})
+                'body': json.dumps({'success': True, 'message': 'Cipher challenge answered correctly!', 'username': username, 'user_role': user_role})
             }
         else:
             return {
