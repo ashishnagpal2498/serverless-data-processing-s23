@@ -19,11 +19,12 @@ const PropertyList = () => {
   const [loading, setLoading] = useState(true);
   const { auth } = useAuth();
   const navigate = useNavigate();
-  const {role} = auth  
+  const { role } = auth;
 
   useEffect(() => {
     fetch(
-      "https://tu6xk652ljzr5rfnxjxqwtmwzu0gfsub.lambda-url.us-east-1.on.aws"
+      "https://zo46mxrxfujavfiouexrsbo7wy0ssgad.lambda-url.us-east-1.on.aws/"
+      // "https://tu6xk652ljzr5rfnxjxqwtmwzu0gfsub.lambda-url.us-east-1.on.aws"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -32,8 +33,6 @@ const PropertyList = () => {
       })
       .catch((error) => console.error("Failed to fetch properties:", error));
   }, []);
-
-  
 
   const handleViewFeedback = async (propertyId) => {
     navigate(`/property-feedback/${propertyId}`);
@@ -80,7 +79,9 @@ const PropertyList = () => {
                         variant="contained"
                         color="primary"
                         onClick={() =>
-                          navigate(`/book-room/${property.property_id}/${room.room_id}`)
+                          navigate(
+                            `/book-room/${property.property_id}/${room.room_id}`
+                          )
                         }
                       >
                         Book Now
@@ -99,8 +100,10 @@ const PropertyList = () => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => navigate(`/feedback/${property.property_id}`)}
-                      sx={{ mt: 2, ml:2 }}
+                      onClick={() =>
+                        navigate(`/feedback/${property.property_id}`)
+                      }
+                      sx={{ mt: 2, ml: 2 }}
                     >
                       Give Feedback
                     </Button>
@@ -113,6 +116,6 @@ const PropertyList = () => {
       </Grid>
     </Container>
   );
-}
+};
 
 export default PropertyList;
