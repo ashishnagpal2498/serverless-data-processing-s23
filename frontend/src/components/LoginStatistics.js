@@ -7,11 +7,11 @@ function ReportPage() {
   const { auth } = useAuth();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (auth.role !== "property_agent") {
-  //     navigate("/properties");
-  //   }
-  // }, [auth, navigate]);
+  useEffect(() => {
+    if (auth.role !== "property_agent") {
+      navigate("/properties");
+    }
+  }, [auth, navigate]);
 
   return (
     <Container
