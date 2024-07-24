@@ -7,19 +7,26 @@ function ReportPage() {
   const { auth } = useAuth();
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     if (!auth.isAuthenticated) {
-  //       navigate("/signup");
-  //     }
-  //   }, [auth, navigate]);
+  // useEffect(() => {
+  //   if (auth.role !== "property_agent") {
+  //     navigate("/properties");
+  //   }
+  // }, [auth, navigate]);
 
   return (
     <Container
       component="main"
       maxWidth="lg"
-      sx={{ height: "100vh", overflow: "hidden" }}
+      sx={{ height: "100vh", width: "100vw", overflow: "hidden", padding: 0 }}
     >
-      <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <iframe
           title="Looker Studio Report"
           width="100%"
