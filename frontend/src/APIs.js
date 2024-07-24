@@ -1,11 +1,11 @@
-export const VALIDATE_SECURITY_QUESTIONS = "https://hibukkgogfcn3yhcu76vbzplfm0ynehv.lambda-url.us-east-1.on.aws/"
+export const VALIDATE_SECURITY_QUESTIONS = "https://n6q7vbkuv2kiz32w2yrm35jbfi0kczbh.lambda-url.us-east-1.on.aws/"
 
-export const VALIDATE_CIPHER = "https://iyh3x3tt7v72njpvmgf5ix2aqm0jjclm.lambda-url.us-east-1.on.aws/"
+export const VALIDATE_CIPHER = "https://n5kiel5vxoow4e7inmmvbwhsbq0ufffi.lambda-url.us-east-1.on.aws/"
 
-export const GENERATE_CIPHER = "https://ket2vvauewcso76rcnhkqdwose0chsei.lambda-url.us-east-1.on.aws/"
+export const GENERATE_CIPHER = "https://tcdr5yhj3z3r5e4vfu5yfkqkla0dvuzr.lambda-url.us-east-1.on.aws/"
 
-export const GET_SECURITY_QUESTIONS = "https://rujhmxjzxix2q3eodea3te6eha0jqanu.lambda-url.us-east-1.on.aws/"
+export const GET_SECURITY_QUESTIONS = "https://ikfllispophg7ccfggo3pcawca0hqguz.lambda-url.us-east-1.on.aws/"
 
-export const CONFIRM_USER = "https://fq4aug5q7auci7qhnflznc47fi0nwspi.lambda-url.us-east-1.on.aws/"
+export const CONFIRM_USER = "https://7mu7x2q6nagzexyb6j7bs2kmoe0yikou.lambda-url.us-east-1.on.aws/"
 
-export const USER_SIGN_UP = "https://ungi26kudxp2xg4y6j2l6tph3y0yvydt.lambda-url.us-east-1.on.aws/"
+export const USER_SIGN_UP = "https://opvobjlejsmydndvkiixtjna5a0miknh.lambda-url.us-east-1.on.aws/"
