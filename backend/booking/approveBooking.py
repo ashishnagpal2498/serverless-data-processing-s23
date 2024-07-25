@@ -7,7 +7,7 @@ table_name = 'GuestRoomBookings'
 table = dynamodb.Table(table_name)
 
 sns = boto3.client('sns')
-sns_topic_arn = "arn:aws:sns:us-east-1:440595714051:DALVacationHomeNotifications"
+sns_topic_arn = "arn:aws:sns:us-east-1:452633565221:DALVacationHomeNotifications"
 
 def lambda_handler(event, context):
     try:

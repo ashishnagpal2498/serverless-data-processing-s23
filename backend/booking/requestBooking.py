@@ -11,7 +11,7 @@ sqs = boto3.client('sqs')
 table_name = 'GuestRoomBookings'
 table = dynamodb.Table(table_name)
 
-sqs_queue_url = 'https://sqs.us-east-1.amazonaws.com/440595714051/BookingRequestQueue'
+sqs_queue_url = 'https://sqs.us-east-1.amazonaws.com/452633565221/BookingRequestQueue'
 
 def lambda_handler(event, context):
     try:

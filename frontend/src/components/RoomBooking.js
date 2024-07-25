@@ -1,10 +1,10 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 
 function BookingForm() {
   const { propertyId, roomId } = useParams();
@@ -25,7 +25,8 @@ function BookingForm() {
     try {
       // Perform the API call with the booking details
       const response = await fetch(
-        "https://jme5i3nvruy6p273ysehgqw76e0xuwqy.lambda-url.us-east-1.on.aws",
+        // "https://jme5i3nvruy6p273ysehgqw76e0xuwqy.lambda-url.us-east-1.on.aws",
+        "https://dikkf2ess2uhxqwzovfdqvc3we0eduqp.lambda-url.us-east-1.on.aws/",
         {
           method: "POST",
           headers: {
@@ -38,49 +39,51 @@ function BookingForm() {
       if (!response.ok) throw new Error("Network response was not ok.");
       const result = await response.json();
       console.log("Success:", result);
-      toast.success("Booking Submitted successfully. View email to know the booking status !")
+      toast.success(
+        "Booking Submitted successfully. View email to know the booking status !"
+      );
     } catch (error) {
       console.error("Error:", error);
-      toast.success("Failed to submit booking !")
+      toast.success("Failed to submit booking !");
     }
   };
 
   const sendMessage = async () => {
-    console.log(localStorage.getItem('accessToken'));
+    console.log(localStorage.getItem("accessToken"));
     const messageData = {
       propertyId: propertyId,
       senderEmailId: auth.user,
-      content: document.getElementById('userQuery').value,
-      booking_reference: Math.floor(1000 + Math.random() * 9000)
+      content: document.getElementById("userQuery").value,
+      booking_reference: Math.floor(1000 + Math.random() * 9000),
     };
-  
+
     try {
-      console.log(messageData)
+      console.log(messageData);
       const response = await axios.post(
-        'https://us-central1-serverless-project-427212.cloudfunctions.net/publish_concern', 
+        "https://us-central1-serverless-project-427212.cloudfunctions.net/publish_concern",
         messageData,
         {
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'  // Replace with your actual frontend domain
-          }
-        });
-      console.log('Message sent successfully:', response.data);
-      toast.success('Complaint submitted successfully.');
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*", // Replace with your actual frontend domain
+          },
+        }
+      );
+      console.log("Message sent successfully:", response.data);
+      toast.success("Complaint submitted successfully.");
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       toast.error("Complaint submission failed - try again later");
     }
 
-    document.getElementById('userQuery').value = '';
+    document.getElementById("userQuery").value = "";
   };
 
-
-  useEffect(()=>{
-    if(!auth.isAuthenticated){
-      navigate('/signup')
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      navigate("/signup");
     }
-  },[auth])
+  }, [auth]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -133,7 +136,6 @@ function BookingForm() {
             color="primary"
             sx={{ mt: 2, ml: 1 }} // Adds margin top for spacing between fields
             onClick={sendMessage}
-            
           >
             Submit Query
           </Button>

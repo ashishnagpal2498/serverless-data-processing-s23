@@ -19,6 +19,7 @@ const SecurityQuestions = () => {
         // Token Exchange --> Authorization Grant
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
+        console.log("CODE -->", code)
         async function fetchToken() {
             const tokenEndpoint = `https://${cognitoDomainName}.auth.us-east-1.amazoncognito.com/oauth2/token`;
             const headers = {
@@ -31,7 +32,7 @@ const SecurityQuestions = () => {
                 redirect_uri: cognitoRedirectUri,
             })
             try {
-
+                setTimeout(()=>{console.log("waiting")},3000)
                 const response = await axios.post(tokenEndpoint, data, { headers })
                 const { access_token } = response.data;
                 localStorage.setItem('accessToken', access_token);
@@ -40,12 +41,12 @@ const SecurityQuestions = () => {
                 fetchQuestions();
             }
             catch (error) {
-                console.error('Error exchanging code for tokens ', error)
+                console.log('Error exchanging code for tokens - RETRYING ', error)
                 toast.error("Unexpected error encountered - try login again");
             };
         }
-        if (code)
-            fetchToken();
+
+        fetchToken();
     }, [])
 
     const fetchQuestions = async () => {
