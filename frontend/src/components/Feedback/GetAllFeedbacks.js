@@ -8,7 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  CircularProgress,
   Typography,
 } from "@mui/material";
 import { db } from "../../firebase";
@@ -17,6 +16,7 @@ import axios from "axios";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import Loader from "../Loader";
 
 const GetAllFeedbacks = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -65,7 +65,7 @@ const GetAllFeedbacks = () => {
   }, []);
 
   if (loading) {
-    return <CircularProgress />;
+    return <Loader />
   }
 
   return (

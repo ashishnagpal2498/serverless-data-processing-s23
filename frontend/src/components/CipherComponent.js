@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GENERATE_CIPHER, VALIDATE_CIPHER } from '../APIs';
-import { CircularProgress } from '@mui/material';
+import Loader from './Loader';
 
 const CipherComponent = () => {
     const [cipher, setCipher] = useState('');
@@ -61,7 +61,7 @@ const CipherComponent = () => {
     };
 
     if (loading) {
-        return <CircularProgress />;
+        return <Loader />
       }
 
     return (

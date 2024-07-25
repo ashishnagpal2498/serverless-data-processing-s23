@@ -7,6 +7,7 @@ import CryptoJS from 'crypto-js';
 import { cognitoAppClient, cognitoUserPool } from '../config';
 import { CONFIRM_USER, USER_SIGN_UP } from '../APIs';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 
 const securityQuestions = [
   "What was your childhood nickname?",
@@ -18,6 +19,7 @@ const securityQuestions = [
 
 const Signup = () => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,7 +34,7 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const poolData = {
       UserPoolId: cognitoUserPool,
       ClientId: cognitoAppClient
@@ -78,9 +80,15 @@ const Signup = () => {
       } catch (error) {
         console.error('Error storing user details', error);
         toast.error('Failed to store user details. Please try again.');
+      } finally {
+        setLoading(false);
       }
     });
   };
+
+  if(loading){
+    return <Loader />
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center" style={{ backgroundImage: 'url(your-image-url)', backgroundSize: 'cover' }}>

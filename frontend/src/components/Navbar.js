@@ -26,7 +26,7 @@ const Navbar = () => {
               to="/login-stats"
               className="text-white text-lg font-bold ml-3"
             >
-              Login Stats
+              Dashboard
             </Link>
           )}
         </div>

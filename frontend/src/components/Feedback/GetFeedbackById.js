@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {useParams } from "react-router-dom";
-import { Container, Typography, Box, Paper, Grid, CircularProgress } from "@mui/material";
+import { Container, Typography, Paper, Grid, CircularProgress } from "@mui/material";
 
 import { db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Loader from "../Loader";
 
 const PropertyFeedback = () => {
   const [loading,setLoading] = useState(true)
@@ -27,7 +28,7 @@ const PropertyFeedback = () => {
   },[])
 
   if(loading){
-    return <CircularProgress />
+    return <Loader />
   }
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>

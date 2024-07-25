@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Paper,
@@ -7,12 +7,12 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  CircularProgress,
   Button,
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Loader from "./Loader";
 
 const PropertyList = () => {
   const [properties, setProperties] = useState([]);
@@ -39,7 +39,7 @@ const PropertyList = () => {
   };
 
   if (loading) {
-    return <CircularProgress />;
+    return <Loader />
   }
 
   return (
