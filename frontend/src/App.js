@@ -20,11 +20,12 @@ const App = () => {
 
   useEffect(() => {
     console.log(localStorage);
-    const isAuthCompleted = localStorage.getItem("isAuthCompleted"); // Example: Get username from local storage
+    const isAuthCompleted = localStorage.getItem("isAuthCompleted");
+    const role = localStorage.getItem("role");
     if (!isAuthCompleted) {
-      setAgentId("0fb6986f-9eae-4894-a16b-09b8ce5272f3");
+       setAgentId("0fb6986f-9eae-4894-a16b-09b8ce5272f3");
     } else {
-      setAgentId("90e74eb0-ade5-4500-9023-1eb358391f96");
+      role == "property_agent" ? setAgentId("9fc87692-4696-434e-9554-8d2c5176d160") : setAgentId("90e74eb0-ade5-4500-9023-1eb358391f96");    
     }
   }, []);
 
@@ -57,8 +58,8 @@ const App = () => {
           <df-messenger
             intent="WELCOME"
             chat-title="DalAppBot"
-            //agent-id="0fb6986f-9eae-4894-a16b-09b8ce5272f3"
-            agent-id={agentId}
+            agent-id = {agentId}
+            
             language-code="english"
           ></df-messenger>
         </div>
