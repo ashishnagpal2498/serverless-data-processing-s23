@@ -1,9 +1,9 @@
 // src/components/Navbar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { cognitoLoginPath } from '../config';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { cognitoLoginPath } from "../config";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const Navbar = () => {
   const { auth, logout } = useAuth();
@@ -21,11 +21,21 @@ const Navbar = () => {
           <Link to="/feedbacks" className="text-white text-lg font-bold ml-3">
             Feedbacks
           </Link>
+          {auth.role === "property_agent" && (
+            <Link
+              to="/login-stats"
+              className="text-white text-lg font-bold ml-3"
+            >
+              Login Stats
+            </Link>
+          )}
         </div>
         <div className="flex items-center space-x-4">
           {!auth.isAuthenticated ? (
             <>
-              <Link className='text-white' to={cognitoLoginPath}>Login</Link>
+              <Link className="text-white" to={cognitoLoginPath}>
+                Login
+              </Link>
               <Link to="/signup" className="text-white">
                 Signup
               </Link>
@@ -33,8 +43,9 @@ const Navbar = () => {
           ) : (
             <>
               <span className="text-white">Hello, {auth.user}</span>
-              <a href="/preview.html" className="text-white"><NotificationsIcon fontSize='medium'/></a>
-
+              <a href="/preview.html" className="text-white">
+                <NotificationsIcon fontSize="medium" />
+              </a>
               <button
                 onClick={logout}
                 className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
