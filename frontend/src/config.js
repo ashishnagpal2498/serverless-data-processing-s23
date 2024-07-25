@@ -8,5 +8,5 @@ export const cognitoDomainName = "dalhome-final-sdp-23"
 
 export const cognitoLoginPath = `https://dalhome-final-sdp-23.auth.us-east-1.amazoncognito.com/login?client_id=2qtnp17ld1jl1fq8e8g8spsj02&response_type=code&scope=email+openid+phone&redirect_uri=${cognitoRedirectUri}`
 
-console.log("ENVIRONMENT_ VARIABLES ", REACT_APP_ENVIRONMENT);
+console.log("ENVIRONMENT_ VARIABLES ", process.env.REACT_APP_ENVIRONMENT);
 console.log("REDIRECT_URI is ---- ",cognitoRedirectUri);
