@@ -2,7 +2,7 @@ export const cognitoUserPool = "us-east-1_zaH8sOHX2"
 
 export const cognitoAppClient = "2qtnp17ld1jl1fq8e8g8spsj02"
 
-export const cognitoRedirectUri = process.env.REACT_APP_ENVIRONMENT === "production" ? "https%3A%2F%2Fdal-vacation-home-sdp-23.netlify.app%2Fsecurity-questions" : "http://localhost:3000/security-questions"
+export const cognitoRedirectUri = process.env.REACT_APP_ENVIRONMENT === "production" ? "https://dal-vacation-home-sdp-23.netlify.app/security-questions" : "http://localhost:3000/security-questions"
 
 export const cognitoDomainName = "dalhome-final-sdp-23"
 

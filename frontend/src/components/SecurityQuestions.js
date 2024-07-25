@@ -21,6 +21,7 @@ const SecurityQuestions = () => {
         const code = urlParams.get('code');
         console.log("CODE -->", code)
         async function fetchToken() {
+            console.log("Redirect URI  ", cognitoRedirectUri)
             const tokenEndpoint = `https://${cognitoDomainName}.auth.us-east-1.amazoncognito.com/oauth2/token`;
             const headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
