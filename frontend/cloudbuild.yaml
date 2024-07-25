@@ -23,6 +23,8 @@ steps:
       - '--allow-unauthenticated'
       - '--memory'
       - '4Gi'
+      - '--port'
+      - '3000' 
 
 options:
   logging: CLOUD_LOGGING_ONLY
