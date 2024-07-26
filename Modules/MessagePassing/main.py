@@ -12,10 +12,10 @@ def generate_chat_path(user1_id, user2_id):
 
 def get_property_agent(property_id):
     try:
-        lambda_url = 'https://bgzaeqnjqa2gibtrovkn6xluvq0pwark.lambda-url.us-east-1.on.aws/'
+        lambda_url = 'https://6lfzjpf5vs3ueal5w5fttp7awq0wqfpi.lambda-url.us-east-1.on.aws/'
         payload = {'propertyId': property_id}
         property_agent = requests.post(lambda_url, json=payload).json()
-
+        print('Property Agent...............',property_agent)
         return property_agent        
     except Exception as e:
         print(f"Error retrieving agent from DynamoDB table: {e}")
@@ -23,7 +23,8 @@ def get_property_agent(property_id):
 
 def persist_msg(message_data):
     try:
-        agent_email = get_property_agent(message_data['propertyId'])['email']
+        print('reached...', message_data['propertyId'])
+        agent_email = get_property_agent(message_data['propertyId'])['agent_id']
 
         chat_path = generate_chat_path(message_data['senderEmailId'], agent_email)
         database = firestore.Client(database='(default)')
@@ -54,8 +55,3 @@ def forward_to_agent(cloud_event):
     pub_sub_msg = base64.b64decode(cloud_event.data["message"]["data"])
     message_data = json.loads(pub_sub_msg)
     persist_msg(message_data)
-
-print(persist_msg({'propertyId':2,
-         'senderEmailId':'ashish.nagpal@dal.ca',            'content':'electricity issues',
-            'booking_reference':1232
-           }))
