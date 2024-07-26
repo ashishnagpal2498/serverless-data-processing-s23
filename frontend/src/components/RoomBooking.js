@@ -44,7 +44,7 @@ function BookingForm() {
       );
     } catch (error) {
       console.error("Error:", error);
-      toast.success("Failed to submit booking !");
+      toast.error("Failed to submit booking !");
     }
   };
 

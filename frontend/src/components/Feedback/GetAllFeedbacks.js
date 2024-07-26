@@ -35,7 +35,7 @@ const GetAllFeedbacks = () => {
     const fetchProperties = async () => {
       try {
         const response = await axios.get(
-          "https://tu6xk652ljzr5rfnxjxqwtmwzu0gfsub.lambda-url.us-east-1.on.aws"
+          "https://zo46mxrxfujavfiouexrsbo7wy0ssgad.lambda-url.us-east-1.on.aws/"
         ); 
         console.log("Properties -->",response.data)
         const propertiesMap = response.data.reduce((map, property) => {

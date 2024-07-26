@@ -7,7 +7,6 @@ import CryptoJS from 'crypto-js';
 import { cognitoAppClient, cognitoUserPool } from '../config';
 import { CONFIRM_USER, USER_SIGN_UP } from '../APIs';
 import { useNavigate } from 'react-router-dom';
-import Loader from './Loader';
 
 const securityQuestions = [
   "What was your childhood nickname?",
@@ -86,10 +85,6 @@ const Signup = () => {
     });
   };
 
-  if(loading){
-    return <Loader />
-  }
-
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center" style={{ backgroundImage: 'url(your-image-url)', backgroundSize: 'cover' }}>
       <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
@@ -97,19 +92,19 @@ const Signup = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
             <label className="block text-gray-700">Email:</label>
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div>
             <label className="block text-gray-700">Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div>
             <label className="block text-gray-700">Address:</label>
-            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div>
             <label className="block text-gray-700">Phone:</label>
-            <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div className="flex items-center">
             <label className="block text-gray-700">Property Agent:</label>
@@ -127,7 +122,7 @@ const Signup = () => {
                 <option key={index} value={question}>{question}</option>
               ))}
             </select>
-            <input type="text" value={securityAnswer1} onChange={(e) => setSecurityAnswer1(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={securityAnswer1} onChange={(e) => setSecurityAnswer1(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div>
             <label className="block text-gray-700">Security Question 2:</label>
@@ -136,7 +131,7 @@ const Signup = () => {
                 <option key={index} value={question}>{question}</option>
               ))}
             </select>
-            <input type="text" value={securityAnswer2} onChange={(e) => setSecurityAnswer2(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={securityAnswer2} onChange={(e) => setSecurityAnswer2(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
           <div>
             <label className="block text-gray-700">Security Question 3:</label>
@@ -145,9 +140,14 @@ const Signup = () => {
                 <option key={index} value={question}>{question}</option>
               ))}
             </select>
-            <input type="text" value={securityAnswer3} onChange={(e) => setSecurityAnswer3(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"/>
+            <input type="text" value={securityAnswer3} onChange={(e) => setSecurityAnswer3(e.target.value)} required placeholder="Answer" className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" />
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Sign Up</button>
+          <button type="submit" disabled={loading}
+            className={`w-full py-2 px-4 rounded ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+              } text-white`}
+          >
+            Sign Up
+          </button>
         </form>
         <ToastContainer />
       </div>
